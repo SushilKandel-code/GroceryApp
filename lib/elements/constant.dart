@@ -25,3 +25,6 @@ const TextStyle superSubTextStyle = TextStyle(
 
 const TextStyle buttonStyle =
     TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal);
+
+const TextStyle buttonStyle1 = TextStyle(
+    fontSize: 20.0, fontWeight: FontWeight.normal, color: Colors.white);

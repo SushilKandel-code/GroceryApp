@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:onlinemarket/ModelClass/HomeProducts_Models.dart';
 import 'package:onlinemarket/ModelClass/categoryContent_Models.dart';
-import 'package:onlinemarket/ModelClass/categoryProduct_Models.dart';
 
 String authority = "gstore.ksushil.com.np";
 String unencodedPath = "/api/home.php";
@@ -24,6 +23,7 @@ class HomeApiService {
       //  print(response.statusCode);
 
       if (response.statusCode == 200) {
+        await Future.delayed(Duration(seconds: 3));
         homeScreenSlide = HomeScreenSlide.fromJson(
             jsonDecode(response.body)['home_screen_slide']);
         hotSale =
@@ -60,50 +60,13 @@ class CategoryApiService {
       final response = await client.get(Uri.https(authority, unencodedPath));
       // print(response.statusCode);
       if (response.statusCode == 200) {
+        await Future.delayed(Duration(seconds: 3));
         category = Category.fromJson(jsonDecode(response.body)['category']);
         // for (var i in category!.contents!) {
         //   print("name:" + i.name.toString());
         //   // print("image:" + i.imagePath.toString());
         // }
         return category;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      rethrow;
-    }
-  }
-}
-
-class CategoryProductApiService {
-  String authority = "gstore.ksushil.com.np";
-  String unencodedPath = "/api/category.php";
-  final client = http.Client();
-  CategoryProductModel? categoryProduct;
-  CategoryApiService? category;
-
-  static get index => null;
-
-  Future<CategoryProductModel?> getCategories() async {
-    try {
-      final response = await client.get(
-        Uri.https(
-          authority,
-          unencodedPath,
-        ),
-      );
-
-      // print(response.statusCode);
-
-      if (response.statusCode == 200) {
-        categoryProduct =
-            CategoryProductModel.fromJson(jsonDecode(response.body)['content']);
-        // for (var i in categoryProduct!.content!) {
-        // ignore: avoid_print
-        // print("name:" + i.name.toString());
-        // print("image:" + i.imagePath.toString());
-        //}
-        return categoryProduct;
       } else {
         return null;
       }
