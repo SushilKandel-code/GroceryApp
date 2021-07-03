@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onlinemarket/ApiService/ApiServices.dart';
-import 'package:onlinemarket/ModelClass/categoryProduct_Models.dart';
 import 'package:onlinemarket/elements/constant.dart';
 import 'package:onlinemarket/elements/drawer.dart';
+import 'package:onlinemarket/screens/ProductList/productList.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -15,9 +15,6 @@ class CategoryScreen extends StatefulWidget {
 class _CategoryScreenState extends State<CategoryScreen> {
   bool? isLoading = true;
   final _categoryService = CategoryApiService();
-
-  CategoryProductModel? categoryProductModel;
-
   @override
   void initState() {
     super.initState();
@@ -45,34 +42,38 @@ class _CategoryScreenState extends State<CategoryScreen> {
         drawer: DrawerComponent(),
         body: RefreshIndicator(
           onRefresh: _pullRefresh,
-          child: InkWell(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10.0,
-                mainAxisSpacing: 15.0,
-              ),
-              padding: EdgeInsets.all(
-                10.0,
-              ),
-              itemCount: _categoryService.category!.contents!.length,
-              scrollDirection: Axis.vertical,
-              itemBuilder: (BuildContext context, int index) {
-                return _categoryContent(
-                  imagePath:
-                      "http://gstore.ksushil.com.np/images/${_categoryService.category!.contents![index].imagePath}",
-                  name: _categoryService.category!.contents![index].name,
-                )!;
-              },
-            ),
-            onTap: () {
-              int index = 0;
-              //  Navigator.pushNamed(context, '/productList',
-              //     arguments: categoryProductModel!.content![index].id);
-
-              print(_categoryService.category!.contents![index].name);
-            },
-          ),
+          child: isLoading == true
+              ? Center(child: CircularProgressIndicator())
+              : GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10.0,
+                    mainAxisSpacing: 15.0,
+                  ),
+                  padding: EdgeInsets.all(
+                    10.0,
+                  ),
+                  itemCount: _categoryService.category!.contents!.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _categoryContent(
+                        imagePath:
+                            "http://gstore.ksushil.com.np/images/${_categoryService.category!.contents![index].imagePath}",
+                        name: _categoryService.category!.contents![index].name,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductList(
+                                  name: _categoryService
+                                      .category!.contents![index].name,
+                                  id: _categoryService
+                                      .category!.contents![index].id),
+                            ),
+                          );
+                        })!;
+                  },
+                ),
         ),
       ),
     );
@@ -101,34 +102,38 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget? _categoryContent({
     @required String? name,
     @required String? imagePath,
+    @required VoidCallback? onTap,
   }) {
-    return Container(
-      height: 250.0,
-      width: 200,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              name!,
-              style: GoogleFonts.poppins(fontSize: 15.0),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Center(
-              child: Image.network(
-                imagePath!,
-                fit: BoxFit.fill,
-                height: 100.0,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 250.0,
+        width: 200,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name!,
+                style: GoogleFonts.poppins(fontSize: 15.0),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 10.0,
+              ),
+              Center(
+                child: Image.network(
+                  imagePath!,
+                  fit: BoxFit.fill,
+                  height: 100.0,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

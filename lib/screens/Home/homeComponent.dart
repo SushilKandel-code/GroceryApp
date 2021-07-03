@@ -1,7 +1,11 @@
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:onlinemarket/ApiService/ApiServices.dart';
 import 'package:onlinemarket/elements/constant.dart';
+import 'package:onlinemarket/screens/ProductList/productDescription.dart';
+import 'package:onlinemarket/screens/ProductList/productList.dart';
 
 class HomeComponent extends StatefulWidget {
   const HomeComponent({Key? key}) : super(key: key);
@@ -84,10 +88,21 @@ class _HomeComponentState extends State<HomeComponent> {
                           itemCount: _service.category!.contents!.length,
                           itemBuilder: (context, index) {
                             return _categoryComponent(
-                              imagePath:
-                                  "http://gstore.ksushil.com.np/images/${_service.category!.contents![index].imagePath}",
-                              name: _service.category!.contents![index].name,
-                            );
+                                imagePath:
+                                    "http://gstore.ksushil.com.np/images/${_service.category!.contents![index].imagePath}",
+                                name: _service.category!.contents![index].name,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductList(
+                                          name: _service
+                                              .category!.contents![index].name,
+                                          id: _service
+                                              .category!.contents![index].id),
+                                    ),
+                                  );
+                                });
                           },
                         ),
                 ),
@@ -99,7 +114,7 @@ class _HomeComponentState extends State<HomeComponent> {
                   height: 400,
                   child: isLoading == true
                       ? Center(
-                          child: const CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             strokeWidth: 2.0,
                           ),
                         )
@@ -115,13 +130,25 @@ class _HomeComponentState extends State<HomeComponent> {
                           itemCount: _homeService.hotSale!.homeContents!.length,
                           itemBuilder: (context, index) {
                             return _hotSaleComponent(
-                              name: _homeService
-                                  .hotSale!.homeContents![index].name,
-                              image:
-                                  "http://gstore.ksushil.com.np/images/${_homeService.hotSale!.homeContents![index].imagePath}",
-                              price: _homeService
-                                  .hotSale!.homeContents![index].price,
-                            );
+                                name: _homeService
+                                    .hotSale!.homeContents![index].name,
+                                image:
+                                    "http://gstore.ksushil.com.np/images/${_homeService.hotSale!.homeContents![index].imagePath}",
+                                price: _homeService
+                                    .hotSale!.homeContents![index].price,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDescription(
+                                        id: _homeService
+                                            .hotSale!.homeContents![index].id!,
+                                        name: _homeService.hotSale!
+                                            .homeContents![index].name!,
+                                      ),
+                                    ),
+                                  );
+                                });
                           },
                         ),
                 ),
@@ -133,7 +160,7 @@ class _HomeComponentState extends State<HomeComponent> {
                   height: 400.0,
                   child: isLoading == true
                       ? Center(
-                          child: const CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             strokeWidth: 2.0,
                           ),
                         )
@@ -149,13 +176,25 @@ class _HomeComponentState extends State<HomeComponent> {
                           itemCount: _homeService.topSale?.homeContents!.length,
                           itemBuilder: (context, index) {
                             return _topSaleComponent(
-                              name: _homeService
-                                  .topSale!.homeContents![index].name,
-                              image:
-                                  "http://gstore.ksushil.com.np/images/${_homeService.topSale!.homeContents![index].imagePath}",
-                              price: _homeService
-                                  .topSale!.homeContents![index].price,
-                            );
+                                name: _homeService
+                                    .topSale!.homeContents![index].name,
+                                image:
+                                    "http://gstore.ksushil.com.np/images/${_homeService.topSale!.homeContents![index].imagePath}",
+                                price: _homeService
+                                    .topSale!.homeContents![index].price,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDescription(
+                                        id: _homeService
+                                            .topSale!.homeContents![index].id!,
+                                        name: _homeService.topSale!
+                                            .homeContents![index].name!,
+                                      ),
+                                    ),
+                                  );
+                                });
                           },
                         ),
                 ),
@@ -167,7 +206,7 @@ class _HomeComponentState extends State<HomeComponent> {
                   height: 400,
                   child: isLoading == true
                       ? Center(
-                          child: const CircularProgressIndicator(
+                          child: CircularProgressIndicator(
                             strokeWidth: 2.0,
                           ),
                         )
@@ -183,13 +222,25 @@ class _HomeComponentState extends State<HomeComponent> {
                           itemCount: _homeService.topSale?.homeContents!.length,
                           itemBuilder: (context, index) {
                             return _latestProductComponent(
-                              name: _homeService
-                                  .latestProduct!.homeContents![index].name,
-                              image:
-                                  "http://gstore.ksushil.com.np/images/${_homeService.latestProduct!.homeContents![index].imagePath}",
-                              price: _homeService
-                                  .latestProduct!.homeContents![index].price,
-                            );
+                                name: _homeService
+                                    .latestProduct!.homeContents![index].name,
+                                image:
+                                    "http://gstore.ksushil.com.np/images/${_homeService.latestProduct!.homeContents![index].imagePath}",
+                                price: _homeService
+                                    .latestProduct!.homeContents![index].price,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductDescription(
+                                        id: _homeService.latestProduct!
+                                            .homeContents![index].id!,
+                                        name: _homeService.latestProduct!
+                                            .homeContents![index].name!,
+                                      ),
+                                    ),
+                                  );
+                                });
                           },
                         ),
                 ),
@@ -201,36 +252,40 @@ class _HomeComponentState extends State<HomeComponent> {
     );
   }
 
-  Widget _categoryComponent({String? name, String? imagePath}) {
-    return Container(
-      width: 80,
-      // color: Colors.blue,
-      margin: EdgeInsets.symmetric(horizontal: 8),
-      child: Wrap(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-            child: Center(
-              child: CircleAvatar(
-                backgroundColor: Colors.grey.shade300,
-                radius: 30.0,
-                child: Image.network(
-                  imagePath!,
-                  fit: BoxFit.cover,
+  Widget _categoryComponent(
+      {String? name, String? imagePath, VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 80,
+        // color: Colors.blue,
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        child: Wrap(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+              child: Center(
+                child: CircleAvatar(
+                  backgroundColor: Colors.grey.shade300,
+                  radius: 30.0,
+                  child: Image.network(
+                    imagePath!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Center(
-              child: Text(
-                name!,
-                textAlign: TextAlign.center,
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Center(
+                child: Text(
+                  name!,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -238,56 +293,61 @@ class _HomeComponentState extends State<HomeComponent> {
   Widget _hotSaleComponent(
       {@required String? image,
       @required String? name,
+      @required VoidCallback? onTap,
       @required String? price}) {
-    return Container(
-      width: 100,
-      height: 250.0,
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.0,
-      ),
-      child: Wrap(
-        alignment: WrapAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-            child: Center(
-              child: Container(
-                height: 80.0,
-                width: 80.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.network(
-                  image!,
-                  fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        height: 250.0,
+        margin: EdgeInsets.symmetric(
+          horizontal: 10.0,
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+              child: Center(
+                child: Container(
+                  height: 80.0,
+                  width: 80.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image.network(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-            ),
-            child: Column(
-              children: [
-                Center(
-                  child: Text(
-                    name!,
-                    textAlign: TextAlign.center,
-                    maxLines: 3,
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 8.0,
+              ),
+              child: Column(
+                children: [
+                  Center(
+                    child: Text(
+                      name!,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Text(
-                    "Price: " + price!,
-                    style: priceTextStyle,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text(
+                      "Price: " + price!,
+                      style: priceTextStyle,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -295,53 +355,58 @@ class _HomeComponentState extends State<HomeComponent> {
   Widget _topSaleComponent(
       {@required String? image,
       @required String? name,
+      @required VoidCallback? onTap,
       @required String? price}) {
-    return Container(
-      width: 100,
-      height: 250.0,
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.0,
-      ),
-      child: Wrap(
-        alignment: WrapAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-            child: Center(
-              child: Container(
-                height: 80.0,
-                width: 80.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.network(
-                  image!,
-                  fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        height: 250.0,
+        margin: EdgeInsets.symmetric(
+          horizontal: 10.0,
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+              child: Center(
+                child: Container(
+                  height: 80.0,
+                  width: 80.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image.network(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-            ),
-            child: Column(
-              children: [
-                Center(
-                  child: Text(
-                    name!,
-                    textAlign: TextAlign.center,
-                    maxLines: 3,
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 8.0,
+              ),
+              child: Column(
+                children: [
+                  Center(
+                    child: Text(
+                      name!,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Text("Price: " + price!, style: priceTextStyle),
-                ),
-              ],
-            ),
-          )
-        ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text("Price: " + price!, style: priceTextStyle),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -349,53 +414,58 @@ class _HomeComponentState extends State<HomeComponent> {
   Widget _latestProductComponent(
       {@required String? image,
       @required String? name,
+      @required VoidCallback? onTap,
       @required String? price}) {
-    return Container(
-      width: 100,
-      height: 250.0,
-      margin: EdgeInsets.symmetric(
-        horizontal: 10.0,
-      ),
-      child: Wrap(
-        alignment: WrapAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-            child: Center(
-              child: Container(
-                height: 80.0,
-                width: 80.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.network(
-                  image!,
-                  fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 100,
+        height: 250.0,
+        margin: EdgeInsets.symmetric(
+          horizontal: 10.0,
+        ),
+        child: Wrap(
+          alignment: WrapAlignment.start,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
+              child: Center(
+                child: Container(
+                  height: 80.0,
+                  width: 80.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Image.network(
+                    image!,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 8.0,
-            ),
-            child: Column(
-              children: [
-                Center(
-                  child: Text(
-                    name!,
-                    textAlign: TextAlign.center,
-                    maxLines: 3,
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 8.0,
+              ),
+              child: Column(
+                children: [
+                  Center(
+                    child: Text(
+                      name!,
+                      textAlign: TextAlign.center,
+                      maxLines: 3,
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Text("Price: " + price!, style: priceTextStyle),
-                ),
-              ],
-            ),
-          )
-        ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: Text("Price: " + price!, style: priceTextStyle),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
